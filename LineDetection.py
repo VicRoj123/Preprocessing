@@ -8,6 +8,8 @@ img = cv.imread("C:\\Users\\Cavem\\Downloads\\Webster_1806\\AA00114919_00001\\00
 gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 # Use Canny edge detection, tuned for highlight edges,  param = (image, minThresh, maxThresh), lower thresh = more edges(allows for weaker lines to show up), higher thresh = less edges
 canny = cv.Canny(gray, 250, 400)
+#bottom is for 1828 and top is 1806
+#canny = cv.Canny(gray, 150, 200)
 
 # Use HoughLines to detect lines, tuned for vertical lines
 Stronglines = cv.HoughLinesP(canny, 1, np.pi/360, threshold=150, minLineLength=200, maxLineGap=15)
@@ -38,3 +40,4 @@ plt.imshow(img_rgb, cmap='gray')
 
 plt.axis('off')
 plt.show()
+
