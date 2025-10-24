@@ -2,16 +2,16 @@ import cv2 as cv
 import numpy as np 
 import matplotlib.pyplot as plt
 
-img = cv.imread("C:\\Users\\Cavem\\Downloads\\00894.tif")
+img = cv.imread("C:\\Users\\Cavem\\Downloads\\Webster_1806\\AA00114919_00001\\00160.tif")
 
 #converts imag to gray scale
 gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 # Use Canny edge detection, tuned for highlight edges,  param = (image, minThresh, maxThresh), lower thresh = more edges(allows for weaker lines to show up), higher thresh = less edges
-canny = cv.Canny(gray, 100, 200)
+canny = cv.Canny(gray, 250, 400)
 
 # Use HoughLines to detect lines, tuned for vertical lines
-Stronglines = cv.HoughLinesP(canny, 1, np.pi/360, threshold=100, minLineLength=200, maxLineGap=15)
-Weaklines = cv.HoughLinesP(canny, 1, np.pi/360, threshold=50, minLineLength=100, maxLineGap=10)
+Stronglines = cv.HoughLinesP(canny, 1, np.pi/360, threshold=150, minLineLength=200, maxLineGap=15)
+Weaklines = cv.HoughLinesP(canny, 1, np.pi/360, threshold=10, minLineLength=100, maxLineGap=10)
 
 allLines = []
 # Combine strong and weak lines
@@ -30,7 +30,7 @@ img_rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 
 # Save the output image
 img_bgr = cv.cvtColor(img_rgb, cv.COLOR_RGB2BGR)
-cv.imwrite("C:\\Users\\Cavem\\Downloads\\00894_output.tif", img_bgr)
+#cv.imwrite("C:\\Users\\Cavem\\Downloads\\00894_output.tif", img_bgr)
 
 
 plt.figure(figsize=(12, 12))
