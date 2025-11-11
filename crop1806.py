@@ -2,8 +2,8 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
 
-image_path = fr'C:\Users\Kenri\Downloads\A20 - ocr - python\1806 Work\00039.tif' ###replace with your file path
-output_path = fr'C:\Users\Kenri\Downloads\A20 - ocr - python\1806 Work\00039_dt.tif' ###replace with your file output path
+image_path = fr'C:\Users\Kenri\Downloads\A20 - ocr - python\1806 Work\1806_Pages\00385.tif' ###replace with your file path
+output_path = fr'C:\Users\Kenri\Downloads\A20 - ocr - python\1806 Work\1806_cropped_385.tif' ###replace with your file output path
 
 #START BY CROPPING OUT THE HEADER
 # Load and grayscale 
@@ -68,7 +68,7 @@ plt.show()
 #if the header line is detected, display the image after cropping, works well
 if term_lines:
     lowest_y = max(term_lines)
-    print(f"Lowest header line at y = {lowest_y}")
+    #print(f"Lowest header line at y = {lowest_y}")
     trimmed = img[lowest_y:, :]  
     '''
     # Crop below that line
@@ -101,10 +101,14 @@ if Stronglines is not None:
 if Weaklines is not None:
     allLines.extend(Weaklines[:, 0])
 
+#'''show
 # Draw detected vertical lines on the original image
 for x1, y1, x2, y2 in allLines:
     if abs(y2 - y1) > abs(x2 - x1):  # Vertical line
-        cv.line(trimmed, (x1, y1), (x2, y2), (255,0 , 0), 2)
+        cv.line(trimmed, (x1, y1), (x2, y2), (255,0 , 0), 2) #red line
+#'''
+
+split_x = int(np.median([int((x1 + x2) / 2) for x1, y1, x2, y2 in allLines if abs(y2 - y1) > abs(x2 - x1)]))
 
 # Convert BGR to RGB for displaying with matplotlib
 img_rgb = cv.cvtColor(trimmed, cv.COLOR_BGR2RGB)
@@ -113,14 +117,14 @@ img_rgb = cv.cvtColor(trimmed, cv.COLOR_BGR2RGB)
 img_bgr = cv.cvtColor(img_rgb, cv.COLOR_RGB2BGR)
 #cv.imwrite(output_path, img_bgr)
 
-'''
+'''show
 plt.figure(figsize=(12, 12))
 plt.imshow(img_bgr, cmap='gray')
 plt.axis('off')
 plt.show()
 '''
 
-#'''
+'''
 #finding midpoint ---
 mid_img = img_bgr.copy()
 img_center = mid_img.shape[1] // 2
@@ -129,11 +133,13 @@ line_centers = [(int((x1 + x2) / 2), (x1, y1, x2, y2)) for x1, y1, x2, y2 in all
 split_x, best_line = min(line_centers, key=lambda l: abs(l[0] - img_center))
 print(f"Detected main vertical divider at x = {split_x}")
 
+#show
 # Draw just that one
 divider_img = img_bgr.copy()
-cv.line(divider_img, (split_x, 0), (split_x, img_bgr.shape[0]), (0, 255, 0), 2)
-
+cv.line(divider_img, (split_x, 0), (split_x, img_bgr.shape[0]), (0, 255, 0), 2) #blue green
 '''
+
+'''show
 plt.figure(figsize=(10, 6))
 plt.imshow(cv.cvtColor(divider_img, cv.COLOR_BGR2RGB))
 plt.title("Main Column Divider Detected")
@@ -141,6 +147,7 @@ plt.axis('off')
 plt.show()
 '''
 
+#'''
 #output cropped image as a single column
 left = img_bgr[:, :split_x]
 right = img_bgr[:, split_x:]
@@ -165,3 +172,4 @@ merged = np.vstack([left, right])
 
 merged = np.vstack([left, right])
 cv.imwrite(output_path, merged)
+#'''
