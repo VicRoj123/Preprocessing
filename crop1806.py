@@ -2,8 +2,8 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
 
-image_path = fr'C:\Users\Kenri\Downloads\A20 - ocr - python\1806 Work\1806_Pages\00061.tif' ###replace with your file path
-output_path = fr'C:\Users\Kenri\Downloads\A20 - ocr - python\1806 Work\00061_dt.tif' ###replace with your file output path
+image_path = fr'C:\Users\Kenri\Downloads\A20 - ocr - python\1806 Work\1806_Pages\00385.tif' ###replace with your file path
+output_path = fr'C:\Users\Kenri\Downloads\A20 - ocr - python\1806 Work\1806_cropped_385.tif' ###replace with your file output path
 
 #START BY CROPPING OUT THE HEADER
 # Load and grayscale 
@@ -117,12 +117,12 @@ img_rgb = cv.cvtColor(trimmed, cv.COLOR_BGR2RGB)
 img_bgr = cv.cvtColor(img_rgb, cv.COLOR_RGB2BGR)
 #cv.imwrite(output_path, img_bgr)
 
-#'''show
+'''show
 plt.figure(figsize=(12, 12))
 plt.imshow(img_bgr, cmap='gray')
 plt.axis('off')
 plt.show()
-#'''
+'''
 
 '''
 #finding midpoint ---
