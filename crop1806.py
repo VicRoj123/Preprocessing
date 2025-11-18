@@ -170,6 +170,5 @@ if right.shape[1] < w:
 # Now safe to merge vertically
 merged = np.vstack([left, right])
 
-merged = np.vstack([left, right])
 cv.imwrite(output_path, merged)
 #'''
