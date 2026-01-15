@@ -163,9 +163,10 @@ def process_tif(image_path: Path, output_root: Path):
     Image.fromarray(rightMark).save(out_dir / "right.tif")
 
     #crops the tif image based on the previous method, for testing, comment out the next 3 lines
-    save_cropped_lines(left, leftLines, output_dir, prefix="left")
-    save_cropped_lines(mid, midLines, output_dir, prefix="mid")
-    save_cropped_lines(right, rightLines, output_dir, prefix="right")
+    #save_cropped_lines(left, leftLines, output_dir, prefix="left")
+    #save_cropped_lines(mid, midLines, output_dir, prefix="mid")
+    #save_cropped_lines(right, rightLines, output_dir, prefix="right")
+    #The above 3 lines should be used for production, currently only works with 1 tif pages
 
     print(f"Saved columns to {output_dir}")
 
